@@ -41,7 +41,7 @@ export default async function handler(
       return res.status(400).json({ message: "Cannot rate this product." });
     }
 
-    product.rating = rating; // Assuming you have a rating field in the product schema
+    product.rating = rating;
     await order.save();
 
     res.status(200).json({ message: "Rating submitted successfully." });

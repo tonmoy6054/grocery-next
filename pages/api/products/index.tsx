@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../../src/utils/connectDB";
 import Product from "../../../src/models/Product";

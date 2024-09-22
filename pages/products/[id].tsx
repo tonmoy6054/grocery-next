@@ -89,7 +89,7 @@ const ProductDetail = ({ product }: ProductDetailProps) => {
                   <li key={index} className="border-b pb-6">
                     <p className="text-gray-800 font-semibold">
                       <span className="text-blue-600">Username:</span>{" "}
-                      {review.user.username}
+                      {/* {review.user.username} */}
                     </p>
                     <p className="text-gray-600">
                       <span className="font-medium">Comment:</span>{" "}

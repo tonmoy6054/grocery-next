@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import Product from "../../../src/models/Product"; // Mongoose product model
+import Product from "../../../src/models/Product";
 import connectDB from "../../../src/utils/connectDB";
 
 export default async function handler(

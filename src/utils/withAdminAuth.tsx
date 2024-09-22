@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // Correct default import
 
 const withAdminAuth = (WrappedComponent: React.FC) => {
   const Wrapper: React.FC = (props) => {
@@ -14,7 +15,7 @@ const withAdminAuth = (WrappedComponent: React.FC) => {
       }
 
       try {
-        const decodedToken: any = jwt_decode(token);
+        const decodedToken: any = jwtDecode(token); // Use jwtDecode as a function
         if (decodedToken.role !== "admin") {
           router.push("/");
         }

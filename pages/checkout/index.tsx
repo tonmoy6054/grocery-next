@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../src/redux/store";
@@ -130,3 +131,11 @@ const CheckoutPage: React.FC = () => {
 };
 
 export default CheckoutPage;
+function createOrder(order: {
+  products: { quantity: number; _id: string; name: string; price: number }[];
+  totalPrice: number;
+  paymentMethod: string;
+  status: string;
+}) {
+  throw new Error("Function not implemented.");
+}

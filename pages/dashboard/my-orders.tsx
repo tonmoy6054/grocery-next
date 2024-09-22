@@ -1,11 +1,20 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
-import { useSession, getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import axios from "axios";
+
+// Define the type for an order
+interface Order {
+  _id: string;
+  productName: string;
+  status: string;
+}
 
 const MyOrders = () => {
   const { data: session, status } = useSession();
-  const [orders, setOrders] = useState([]);
-  const [error, setError] = useState(null);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,13 +27,16 @@ const MyOrders = () => {
 
       try {
         const response = await axios.get("/api/orders/my-orders");
-        if (response.data.orders.length === 0) {
-          setError("No orders found");
+        const fetchedOrders = response.data.orders as Order[];
+        if (fetchedOrders.length === 0) {
+          setError("No orders found.");
         } else {
-          setOrders(response.data.orders);
+          setOrders(fetchedOrders);
         }
       } catch (error) {
-        setError(error.response?.data?.message || "Failed to fetch orders");
+        const message =
+          (error as any)?.response?.data?.message || "Failed to fetch orders.";
+        setError(message);
       } finally {
         setLoading(false);
       }

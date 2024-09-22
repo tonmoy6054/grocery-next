@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // pages/api/orders/updateStatus.ts
 
 import { NextApiRequest, NextApiResponse } from "next";
@@ -46,7 +47,7 @@ export default async function handler(
         message: "Order status updated successfully",
         order,
       });
-    } catch (error) {
+    } catch (error: any) {
       return res.status(403).json({ success: false, message: error.message });
     }
   } else {

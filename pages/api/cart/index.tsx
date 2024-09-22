@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from "next";
 import Cart from "../../../src/models/Cart"; // Adjust the path according to your project structure
 import Product from "../../../src/models/Product";
+import { getSession } from "next-auth/react"; // Assuming you're using next-auth
 
 // API handler
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -25,6 +27,15 @@ const addToCart = async (req: NextApiRequest, res: NextApiResponse) => {
         .json({ message: "Product ID and quantity are required" });
     }
 
+    // Get the session to obtain the user ID
+    const session = await getSession({ req });
+    if (!session) {
+      return res
+        .status(401)
+        .json({ message: "You must be logged in to add to cart" });
+    }
+    const userId = session.user?.id; // Replace with actual user field from session
+
     // Find product by ID
     const product = await Product.findById(productId);
     if (!product) {
@@ -36,8 +47,6 @@ const addToCart = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).json({ message: "Product price not available" });
     }
 
-    const userId = req.user?._id || "hardcodedUserIdForTesting"; // For testing purposes, replace with actual auth later
-
     // Find or create a cart for the user
     let cart = await Cart.findOne({ user: userId });
     if (!cart) {
@@ -46,7 +55,7 @@ const addToCart = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Update the cart items
     const existingItemIndex = cart.items.findIndex(
-      (item) => item.product.toString() === productId
+      (item: any) => item.product.toString() === productId
     );
     if (existingItemIndex >= 0) {
       cart.items[existingItemIndex].quantity += quantity;
@@ -55,8 +64,7 @@ const addToCart = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     // Recalculate total price
-    cart.totalPrice = cart.items.reduce((total, item) => {
-      // Find the actual product details for each item
+    cart.totalPrice = cart.items.reduce((total: number, item: any) => {
       const itemProduct =
         item.product.toString() === productId ? product : null;
       if (itemProduct) {
@@ -67,7 +75,7 @@ const addToCart = async (req: NextApiRequest, res: NextApiResponse) => {
 
     await cart.save();
     return res.status(200).json({ message: "Product added to cart", cart });
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
     return res
       .status(500)

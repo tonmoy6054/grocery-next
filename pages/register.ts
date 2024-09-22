@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -36,7 +37,7 @@ const registerHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     );
 
     res.status(201).json({ accessToken });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Registration error:", error); // Log the entire error object
     res.status(500).json({ message: "Server error", error: error.message });
   }

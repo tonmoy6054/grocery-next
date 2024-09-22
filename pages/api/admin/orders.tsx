@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextApiRequest, NextApiResponse } from "next";
 import connectDB from "../../../src/utils/connectDB";
 import Order from "../../../src/models/Orders";
@@ -12,7 +13,7 @@ export default async function handler(
     try {
       const orders = await Order.find({});
       res.status(200).json(orders);
-    } catch (error) {
+    } catch (error: any) {
       res
         .status(500)
         .json({ message: "Failed to fetch orders", error: error.message });
@@ -25,7 +26,7 @@ export default async function handler(
       await newOrder.save();
 
       res.status(201).json(newOrder);
-    } catch (error) {
+    } catch (error: any) {
       res
         .status(500)
         .json({ message: "Failed to create order", error: error.message });
@@ -46,7 +47,7 @@ export default async function handler(
       }
 
       res.status(200).json(updatedOrder);
-    } catch (error) {
+    } catch (error: any) {
       res
         .status(500)
         .json({ message: "Failed to update order", error: error.message });

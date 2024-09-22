@@ -1,8 +1,9 @@
-// /pages/api/orders/rate-order.ts
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
-import connectDB from "../../../src/utils/connectDB"; // Database connection utility
-import Order from "src/models/Orders"; // Import Order model
+import connectDB from "../../../src/utils/connectDB";
+import Order from "src/models/Orders";
 
 connectDB();
 
@@ -34,7 +35,7 @@ export default async function handler(
     }
 
     const product = order.products.find(
-      (p) => p.productId.toString() === productId
+      (p: any) => p.productId.toString() === productId
     );
 
     if (!product || order.status !== "delivered") {

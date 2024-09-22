@@ -17,8 +17,13 @@
         "name": "next"
       }
     ],
+    // "paths": {
+    //   "@/*": ["./src/*"]
+    // }
+
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/redux/*": ["src/redux/*"] // Make sure this path matches your folder structure
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

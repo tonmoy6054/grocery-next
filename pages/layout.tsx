@@ -36,9 +36,8 @@
 //   );
 // }
 
-import { metadata } from "./metadata"; // Adjust the path as necessary
+import { metadata } from "../metadata"; // Adjust the path as necessary
 import localFont from "next/font/local";
-import "../styles/globals.css";
 
 // Load the fonts
 const geistSans = localFont({

@@ -30,7 +30,15 @@ import { store, persistor } from "@/redux/store";
 import "../styles/globals.css";
 import { ThemeProvider } from "next-themes";
 import { ToastContainer } from "react-toastify";
-import { AppProps } from "next/app"; // Import AppProps from Next.js
+import { AppProps } from "next/app";
+import localFont from "next/font/local";
+
+// Load the font
+const geistSans = localFont({
+  src: "../public/fonts/GeistMonoVF.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -39,7 +47,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <PersistGate loading={null} persistor={persistor}>
           <ToastContainer />
           <ThemeProvider attribute="class">
-            <Component {...pageProps} />
+            <div className={geistSans.variable}>
+              <Component {...pageProps} />
+            </div>
           </ThemeProvider>
         </PersistGate>
       </Provider>
